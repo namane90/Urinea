@@ -311,7 +311,7 @@ let S = {
 };
 let PREFS = { apiKey: '', fbConfigStr: '' }; // device-local only
 let curView   = 'Home';
-let curMonth  = new Date().toISOString().slice(0,7);
+const _now=new Date(); let curMonth=`${_now.getFullYear()}-${String(_now.getMonth()+1).padStart(2,'0')}`;
 let addFS     = { photo: null, participants: [0,1,2,3], payer: 0 };
 let editingId = null; // 수정 중인 지출 id
 let fbDb      = null;
@@ -436,7 +436,7 @@ function render(n) {
 const fmt  = n => Math.round(n).toLocaleString('ko-KR')+'원';
 const fmtD = s => { if(!s)return''; const d=new Date(s+'T00:00:00'); return`${d.getMonth()+1}/${d.getDate()}`; };
 const fmtM = ym => { const[y,m]=ym.split('-'); return`${y}년 ${+m}월`; };
-const addM = (ym,d) => { const[y,m]=ym.split('-').map(Number); return new Date(y,m-1+d,1).toISOString().slice(0,7); };
+const addM = (ym,d) => { const[y,m]=ym.split('-').map(Number); const nd=new Date(y,m-1+d,1); return`${nd.getFullYear()}-${String(nd.getMonth()+1).padStart(2,'0')}`; };
 const today = () => new Date().toISOString().slice(0,10);
 const uid   = () => Date.now().toString(36)+Math.random().toString(36).slice(2);
 const monthExp = m => S.expenses.filter(e=>e.date?.startsWith(m));
